@@ -1,6 +1,6 @@
 site:
   title: "Kobweb GHP Demo"
-  routePrefix: "kobweb-ghp-demo"
+  routePrefix: "kobweb-ghp-demo-main"
 
 server:
   files:
