@@ -1,6 +1,6 @@
 site:
-  title: "Kobweb GHP Demo"
-  routePrefix: "kobweb-ghp-demo-main"
+  title: "kotlin websample"
+  routePrefix: "kotlin-websample-2"
 
 server:
   files:
