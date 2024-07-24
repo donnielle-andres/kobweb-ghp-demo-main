@@ -100,15 +100,14 @@ enum class SideMenuState {
 @Composable
 fun NavHeader() {
     Row(NavHeaderStyle.toModifier(), verticalAlignment = Alignment.CenterVertically) {
-        Link("https://kobweb.varabyte.com") {
+        Link("https://www.ibm.com/products/instana") {
             // Block display overrides inline display of the <img> tag, so it calculates centering better
-            Image("/kobweb-logo.png", "Kobweb Logo", Modifier.height(2.cssRem).display(DisplayStyle.Block))
+            Image("/IBM-instana.png", "Instana Logo", Modifier.height(8.cssRem).display(DisplayStyle.Block))
         }
 
         Spacer()
 
         Row(Modifier.gap(1.5.cssRem).displayIfAtLeast(Breakpoint.MD), verticalAlignment = Alignment.CenterVertically) {
-            MenuItems()
             ColorModeButton()
         }
 
@@ -148,8 +147,6 @@ private fun SideMenu(menuState: SideMenuState, close: () -> Unit, onAnimationEnd
                     .fillMaxHeight()
                     .width(clamp(8.cssRem, 33.percent, 10.cssRem))
                     .align(Alignment.CenterEnd)
-                    // Close button will appear roughly over the hamburger button, so the user can close
-                    // things without moving their finger / cursor much.
                     .padding(top = 1.cssRem, leftRight = 1.cssRem)
                     .gap(1.5.cssRem)
                     .backgroundColor(ColorMode.current.toSitePalette().nearBackground)

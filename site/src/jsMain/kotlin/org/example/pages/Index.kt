@@ -31,6 +31,19 @@ import org.example.SubheadlineTextStyle
 import org.example.components.layouts.PageLayout
 import org.example.toSitePalette
 
+import androidx.compose.runtime.*
+import com.varabyte.kobweb.compose.foundation.layout.*
+import com.varabyte.kobweb.compose.ui.Alignment
+import com.varabyte.kobweb.compose.ui.modifiers.*
+import com.varabyte.kobweb.compose.ui.toAttrs
+import org.jetbrains.compose.web.css.*
+import org.jetbrains.compose.web.attributes.InputType
+import org.jetbrains.compose.web.attributes.placeholder
+import org.jetbrains.compose.web.dom.Input
+import org.jetbrains.compose.web.dom.P
+import org.jetbrains.compose.web.dom.Text
+import org.jetbrains.compose.web.css.px
+
 // Container that has a tagline and grid on desktop, and just the tagline on mobile
 val HeroContainerStyle by ComponentStyle {
     base { Modifier.fillMaxWidth().gap(2.cssRem) }
@@ -71,56 +84,39 @@ private fun GridCell(color: Color, row: Int, column: Int, width: Int? = null, he
 @Composable
 fun HomePage() {
     PageLayout("Home") {
-        Row(HeroContainerStyle.toModifier()) {
-            Box {
-                val sitePalette = ColorMode.current.toSitePalette()
+        var name by remember { mutableStateOf("") }
 
-                Column(Modifier.gap(2.cssRem)) {
-                    Div(HeadlineTextStyle.toAttrs()) {
-                        SpanText(
-                            "Use this template as your starting point for ", Modifier.color(
-                                when (ColorMode.current) {
-                                    ColorMode.LIGHT -> Colors.Black
-                                    ColorMode.DARK -> Colors.White
-                                }
-                            )
-                        )
-                        SpanText(
-                            "Kobweb",
-                            Modifier
-                                .color(sitePalette.brand.accent)
-                                // Use a shadow so this light-colored word is more visible in light mode
-                                .textShadow(0.px, 0.px, blurRadius = 0.5.cssRem, color = Colors.Gray)
-                        )
-                    }
-
-                    Div(SubheadlineTextStyle.toAttrs()) {
-                        SpanText("You can read the ")
-                        Link("/about", "About")
-                        SpanText(" page for more information.")
-                    }
-
-                    val ctx = rememberPageContext()
-                    Button(onClick = {
-                        // Change this click handler with your call-to-action behavior
-                        // here. Link to an order page? Open a calendar UI? Play a movie?
-                        // Up to you!
-                        ctx.router.tryRoutingTo("/about")
-                    }, colorScheme = ColorSchemes.Blue) {
-                        Text("This could be your CTA")
-                    }
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(topBottom = 20.px)
+                .align(Alignment.CenterHorizontally),
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            Box(
+                modifier = Modifier
+                    .padding(bottom = 10.px)
+                    .align(Alignment.CenterHorizontally)
+            ) {
+                P(attrs = Modifier
+                    .fontSize(30.px)
+                    .toAttrs()) {
+                    Text("Instana Agent for $name")
                 }
             }
 
-            Div(HomeGridStyle.toAttrs()) {
-                val sitePalette = ColorMode.current.toSitePalette()
-                GridCell(sitePalette.brand.primary, 1, 1, 2, 2)
-                GridCell(ColorSchemes.Monochrome._600, 1, 3)
-                GridCell(ColorSchemes.Monochrome._100, 1, 4, width = 2)
-                GridCell(sitePalette.brand.accent, 2, 3, width = 2)
-                GridCell(ColorSchemes.Monochrome._300, 2, 5)
-                GridCell(ColorSchemes.Monochrome._800, 3, 1, width = 5)
-            }
+            Input(
+                type = InputType.Text,
+                attrs = Modifier
+                    .padding(topBottom = 10.px, leftRight = 20.px)
+                    .fontSize(20.px)
+                    .toAttrs {
+                        placeholder(value = "Client Name")
+                        onInput {
+                            name = it.value
+                        }
+                    }
+            )
         }
     }
 }
